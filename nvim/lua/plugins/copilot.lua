@@ -1,8 +1,23 @@
 return {
-    'github/copilot.vim',
-    config = function ()
-        -- Optional configurations
-        -- vim.g.copilot_no_tab_map = true  -- Disables <Tab> for Copilot completion
-        -- vim.api.nvim_set_keymap("i", "<C-J>", 'copilot#Accept("<CR>")', { silent = true, expr = true })  -- Remaps accept to <C-J>
-    end
+  "zbirenbaum/copilot.lua",
+  cmd = "Copilot",
+  build = ":Copilot auth",
+  event = "BufReadPost",
+  opts = {
+    suggestion = {
+      enabled = not vim.g.ai_cmp,
+      auto_trigger = true,
+      hide_during_completion = vim.g.ai_cmp,
+      keymap = {
+        accept = "<Tab>", -- handled by nvim-cmp / blink.cmp
+        next = "<M-]>",
+        prev = "<M-[>",
+      },
+    },
+    panel = { enabled = false },
+    filetypes = {
+      markdown = true,
+      help = true,
+    },
+  },
 }

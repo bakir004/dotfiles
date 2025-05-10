@@ -19,6 +19,9 @@ vim.keymap.set("n", "<C-l>", "<C-w>l")
 vim.keymap.set("n", "<leader>q", "<Cmd>q<CR>")
 vim.keymap.set("t", "<C-q>", "<Cmd>q<CR>")
 
+vim.keymap.set("n", "<leader>oi", ":TSToolsOrganizeImports<CR>")
+vim.keymap.set("n", "<leader>mi", ":TSToolsAddMissingImports<CR>")
+
 vim.keymap.set("n", "<leader>]", ":TransparentEnable<CR>")
 
 function OpenTerminal()
@@ -29,3 +32,7 @@ function OpenTerminal()
 end
 
 vim.keymap.set("n", "<leader>t", [[:lua OpenTerminal()<CR>]])
+
+vim.keymap.set('n', '<leader>cr', function()
+  vim.lsp.buf.rename()
+end, { expr = true, desc = 'LSP Rename' })
