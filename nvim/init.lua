@@ -1,3 +1,4 @@
+print("Neovim config loaded!")
 require("bakeroni")
 require("config.lazy")
 
