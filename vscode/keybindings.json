@@ -1,0 +1,172 @@
+[
+  // Leader key mappings (Space as leader)
+  {
+    "key": "space f f",
+    "command": "workbench.action.quickOpen",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space f b",
+    "command": "workbench.action.showAllEditors",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space f g",
+    "command": "workbench.action.quickOpen",
+    "args": { "filesToInclude": "git" },
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space s g",
+    "command": "workbench.action.findInFiles",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space s s",
+    "command": "workbench.action.gotoSymbol",
+    "when": "editorHasDocumentSymbolProvider && editorTextFocus"
+  },
+  {
+    "key": "space s S",
+    "command": "workbench.action.showAllSymbols",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space s b",
+    "command": "workbench.action.findInFiles",
+    "args": { "filesToInclude": "${relativeFile}" },
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space s d",
+    "command": "workbench.actions.view.problems",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space e",
+    "command": "workbench.view.explorer",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space a",
+    "command": "workbench.action.quickOpen",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space u",
+    "command": "workbench.action.localHistory",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space g g",
+    "command": "git.openRepository",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space a a",
+    "command": "workbench.action.chat.open",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "space a c",
+    "command": "workbench.action.chat.open",
+    "when": "editorTextFocus"
+  },
+
+  // Navigation
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.focusLeftGroup",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.focusBelowGroup",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.focusRightGroup",
+    "when": "editorTextFocus"
+  },
+
+  // LSP navigation
+  {
+    "key": "g d",
+    "command": "editor.action.revealDefinition",
+    "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+  {
+    "key": "g r",
+    "command": "editor.action.goToReferences",
+    "when": "editorHasReferenceProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+  },
+  {
+    "key": "g I",
+    "command": "editor.action.goToImplementation",
+    "when": "editorHasImplementationProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+  {
+    "key": "g y",
+    "command": "editor.action.goToTypeDefinition",
+    "when": "editorHasTypeDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+  },
+
+  // File operations
+  {
+    "key": "ctrl+s",
+    "command": "workbench.action.files.save",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "space q",
+    "command": "workbench.action.closeActiveEditor",
+    "when": "editorTextFocus"
+  },
+
+  // Terminal
+  {
+    "key": "space t",
+    "command": "workbench.action.terminal.new",
+    "when": "editorTextFocus"
+  },
+
+  // Buffer/Editor navigation
+  {
+    "key": "ctrl+e",
+    "command": "workbench.action.showAllEditors",
+    "when": "editorTextFocus"
+  },
+
+  // Scroll with centering
+  {
+    "key": "ctrl+d",
+    "command": "editor.action.revealLine",
+    "args": { "lineNumber": "cursor", "at": "center" },
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "ctrl+u",
+    "command": "editor.action.revealLine",
+    "args": { "lineNumber": "cursor", "at": "center" },
+    "when": "editorTextFocus"
+  },
+
+  // Visual mode line movement
+  {
+    "key": "shift+j",
+    "command": "editor.action.moveLinesDownAction",
+    "when": "editorTextFocus && editorHasSelection"
+  },
+  {
+    "key": "shift+k",
+    "command": "editor.action.moveLinesUpAction",
+    "when": "editorTextFocus && editorHasSelection"
+  }
+]
+

@@ -1,5 +1,5 @@
 return { -- Autocompletion
-    
+
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
@@ -66,7 +66,16 @@ return { -- Autocompletion
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<Tab>'] = cmp.mapping.confirm { select = true },
+          ['<Tab>'] = cmp.mapping(function(fallback)
+            local copilot = require('copilot.suggestion')
+            if copilot.is_visible() then
+              copilot.accept()
+            elseif cmp.visible() then
+              cmp.confirm({ select = true })
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines

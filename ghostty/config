@@ -21,10 +21,11 @@
 # # separated by equals signs.
 # font-family = Iosevka
 # window-padding-x = 2
-theme = rose-pine
-font-size = 14
+theme = Rose Pine
+font-size = 18
 background-opacity = 0.85
 background-blur-radius = 50
+background = #09160c
 window-decoration = true
 #
 # # Spacing around the equals sign does not matter.
