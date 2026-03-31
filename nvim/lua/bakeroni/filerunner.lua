@@ -18,6 +18,8 @@ function RunFile(filePath, size)
         command = string.format('dotnet run')
     elseif extension:match("%.rs$") then
         command = string.format('rustc %s.rs && ./%s', fileName, fileName, fileName)
+    elseif extension:match("%.py$") then
+        command = string.format('python3 %s.py', fileName)
     else
         print("Unsupported file type")
         return

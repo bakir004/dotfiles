@@ -16,6 +16,7 @@ vim.cmd[[ hi StatusLineNC guibg=NONE ctermbg=NONE ]]
 vim.cmd[[ hi SignColumn guibg=NONE ctermbg=NONE ]]
 vim.cmd[[ hi NormalNC guibg=NONE ctermbg=NONE ]]
 
+
 vim.diagnostic.config({
   virtual_text = true,
 })
@@ -43,6 +44,13 @@ vim.o.scrolloff = 999
 
 vim.keymap.set("n", "<leader>r", ":source $USERPROFILE/AppData/Local/nvim/init.lua<CR>")
 vim.keymap.set("n", "<Tab>", "", {noremap = true, silent = true})
+vim.keymap.set('n', 'gl', function()
+    vim.diagnostic.open_float({
+        border = "rounded",  -- Makes the popup look better
+        focusable = true,    -- Allows you to 'Tab' into the popup to scroll/copy text
+        source = "always",   -- Shows if it's an ESLint, Pyright, etc. error
+    })
+end, { desc = "Open floating diagnostic message" })
 
 
 
