@@ -46,8 +46,8 @@ vim.keymap.set("n", "<leader>r", ":source $USERPROFILE/AppData/Local/nvim/init.l
 vim.keymap.set("n", "<Tab>", "", {noremap = true, silent = true})
 vim.keymap.set('n', 'gl', function()
     vim.diagnostic.open_float({
-        border = "rounded",  -- Makes the popup look better
         focusable = true,    -- Allows you to 'Tab' into the popup to scroll/copy text
+        focus = true,        -- Focuses the popup when opened
         source = "always",   -- Shows if it's an ESLint, Pyright, etc. error
     })
 end, { desc = "Open floating diagnostic message" })
