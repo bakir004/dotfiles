@@ -3,7 +3,7 @@ return {
     'neovim/nvim-lspconfig',
     dependencies = {
         -- Automatically install LSPs and related tools
-        { 'williamboman/mason.nvim', config = true, opts = { ensure_installed = { "prettier", "eslint_d", "typescript-language-server", "html-lsp", "css-lsp", "json-lsp", "omnisharp" }}},
+        { 'williamboman/mason.nvim', config = true, opts = { ensure_installed = { "biome", "eslint_d", "html-lsp", "css-lsp", "json-lsp", "omnisharp" }}}, 
         'williamboman/mason-lspconfig.nvim',
         'nvim-lua/plenary.nvim',
         'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -75,6 +75,15 @@ return {
                 --
                 -- When you move your cursor, the highlights will be cleared (the second autocommand).
                 local client = vim.lsp.get_client_by_id(event.data.client_id)
+
+                -- Biome is the only formatter for JavaScript/TypeScript buffers.
+                -- Keep TypeScript, ESLint, and other LSP features enabled, but avoid
+                -- competing formatting providers.
+                if client then
+                    client.server_capabilities.documentFormattingProvider = client.name == 'biome'
+                    client.server_capabilities.documentRangeFormattingProvider = client.name == 'biome'
+                end
+
                 if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
                     local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
                     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
@@ -129,10 +138,40 @@ return {
         local servers = {
             clangd = {},
             -- gopls = {},
-            -- pyright = {},
+            -- Keep Python checking useful without reporting every inferred-type issue.
+            pyright = {
+                settings = {
+                    python = {
+                        analysis = {
+                            typeCheckingMode = "off",
+                            diagnosticMode = "openFilesOnly",
+                            -- Keep real errors, but hide noisy warnings from untyped code.
+                            diagnosticSeverityOverrides = {
+                                reportUnknownMemberType = "none",
+                                reportUnknownArgumentType = "none",
+                                reportUnknownVariableType = "none",
+                                reportUnknownParameterType = "none",
+                                reportMissingTypeArgument = "none",
+                                reportUnusedCallResult = "none",
+                            },
+                        },
+                    },
+                },
+            },
+            -- Some Python setups use BasedPyright instead of Pyright.
+            basedpyright = {
+                settings = {
+                    basedpyright = {
+                        analysis = {
+                            typeCheckingMode = "off",
+                            diagnosticMode = "openFilesOnly",
+                        },
+                    },
+                },
+            },
             -- rust_analyzer = {},
             -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-            
+
             -- ✅ FIXED: Use OmniSharp for better C# support
             omnisharp = {
               cmd = { "omnisharp" },
@@ -145,12 +184,27 @@ return {
                 return util.root_pattern("*.sln", "*.csproj", ".git")(fname)
               end,
             },
-            
+
             -- Web development LSPs
-            -- ✅ FIXED: Changed from deprecated tsserver to ts_ls
-            ts_ls = {},
+            -- ts_ls excluded: typescript-tools.nvim handles TypeScript
+            biome = {
+                cmd = { 'bunx', 'biome', 'lsp-proxy' },
+                filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+                root_dir = function(fname)
+                    local util = require('lspconfig.util')
+                    return util.root_pattern('biome.json', 'biome.jsonc', 'package.json', '.git')(fname)
+                end,
+            },
             html = {},
-            cssls = {},
+            cssls = {
+                settings = {
+                    css = {
+                        lint = {
+                            unknownAtRules = 'ignore',
+                        },
+                    },
+                },
+            },
             jsonls = {
                 settings = {
                     json = {
@@ -164,7 +218,6 @@ return {
                     format = false, -- Let prettier handle formatting
                 },
             },
-
             lua_ls = {
                 -- cmd = {...},
                 -- filetypes = { ...},
@@ -187,14 +240,14 @@ return {
         -- ✅ FIXED: Use OmniSharp for C# support
         local mason_packages = {
             'stylua', -- Used to format Lua code
-            'typescript-language-server', -- For ts_ls
             'html-lsp', -- For html
             'css-lsp', -- For cssls
             'json-lsp', -- For jsonls
             'eslint-lsp', -- For eslint
-            'prettier', -- Formatter
+            'biome', -- Formatter
             'eslint_d', -- ESLint daemon
             'omnisharp', -- C# language server (best support)
+            'pyright', -- Python language server
         }
         require('mason-tool-installer').setup { ensure_installed = mason_packages }
 
@@ -205,6 +258,10 @@ return {
                     server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
                     require('lspconfig')[server_name].setup(server)
                 end,
+                -- typescript-tools.nvim manages this, prevent mason-lspconfig from also starting it
+                ts_ls = function() end,
+                -- nvim-java manages this, prevent mason-lspconfig from also starting it
+                jdtls = function() end,
             },
         }
     end,

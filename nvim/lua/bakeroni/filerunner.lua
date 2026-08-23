@@ -20,6 +20,8 @@ function RunFile(filePath, size)
         command = string.format('rustc %s.rs && ./%s', fileName, fileName, fileName)
     elseif extension:match("%.py$") then
         command = string.format('python3 %s.py', fileName)
+    elseif extension:match("%.odin$") then
+        command = string.format('odin run .')
     else
         print("Unsupported file type")
         return

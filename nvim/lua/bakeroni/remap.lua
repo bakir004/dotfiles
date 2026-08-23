@@ -10,11 +10,6 @@ vim.keymap.set("n", "<C-f>", "<C-u>zz")
 vim.keymap.set("n", "<C-s>", ":w<CR>")
 vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>a")
 
-vim.keymap.set("n", "<C-h>", "<C-w>h")
-vim.keymap.set("n", "<C-j>", "<C-w>j")
-vim.keymap.set("n", "<C-k>", "<C-w>k")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
-
 -- vim.keymap.set("n", "<leader>b", ":NvimTreeToggle<CR>")
 vim.keymap.set("n", "<leader>q", "<Cmd>q<CR>")
 vim.keymap.set("t", "<C-q>", "<Cmd>q<CR>")

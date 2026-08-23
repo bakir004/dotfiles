@@ -34,6 +34,7 @@ return { -- Autocompletion
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'kristijanhusak/vim-dadbod-completion',
     },
     config = function()
       -- See `:help cmp`
@@ -67,9 +68,9 @@ return { -- Autocompletion
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
           ['<Tab>'] = cmp.mapping(function(fallback)
-            local copilot = require('copilot.suggestion')
-            if copilot.is_visible() then
-              copilot.accept()
+            local minuet = require('minuet.virtualtext').action
+            if minuet.is_visible() then
+              minuet.accept()
             elseif cmp.visible() then
               cmp.confirm({ select = true })
             else
@@ -119,6 +120,7 @@ return { -- Autocompletion
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'path' },
+          { name = 'vim-dadbod-completion' },
         },
       }
     end,

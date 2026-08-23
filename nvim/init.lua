@@ -21,6 +21,14 @@ vim.diagnostic.config({
   virtual_text = true,
 })
 
+-- Python LSP diagnostics are disabled; completion, hover, and navigation remain enabled.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "python",
+  callback = function(args)
+    vim.diagnostic.enable(false, { bufnr = args.buf })
+  end,
+})
+
 vim.o.number = true
 vim.o.relativenumber = true
 vim.o.mouse = "a"
@@ -39,6 +47,17 @@ if vim.fn.has('persistent_undo') == 1 then
 end
 
 vim.o.wrap = false
+
+-- Keep Markdown readable in narrow windows without changing wrapping elsewhere.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.breakindent = true
+  end,
+})
+
 vim.o.clipboard = "unnamedplus"
 vim.o.scrolloff = 999
 

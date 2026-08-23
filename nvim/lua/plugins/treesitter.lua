@@ -1,8 +1,9 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
   build = ':TSUpdate',
   opts = {
-    ensure_installed = { 'bash', 'c', 'cpp', 'diff', 'html', 'css', 'javascript', 'typescript', 'tsx', 'jsx', 'json', 'jsonc', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+    ensure_installed = { 'bash', 'c', 'cpp', 'diff', 'html', 'css', 'javascript', 'typescript', 'tsx', 'json', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
     auto_install = true,
     highlight = {
       enable = true,

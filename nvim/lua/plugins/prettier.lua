@@ -6,15 +6,13 @@ return {
 
         conform.setup({
             formatters_by_ft = {
-                javascript = { "prettier" },
-                typescript = { "prettier" },
-                javascriptreact = { "prettier" },
-                typescriptreact = { "prettier" },
-                css = { "prettier" },
-                html = { "prettier" },
-                json = { "prettier" },
-                yaml = { "prettier" },
-                markdown = { "prettier" },
+                javascript = { "biome" },
+                typescript = { "biome" },
+                javascriptreact = { "biome" },
+                typescriptreact = { "biome" },
+                json = { "biome" },
+                jsonc = { "biome" },
+                css = { "biome" },
                 lua = { "stylua" },
                 python = { "isort", "black" },
             },
@@ -24,7 +22,7 @@ return {
             conform.format({
                 lsp_fallback = true,
                 async = false,
-                timeout_ms = 500,
+                timeout_ms = 1000,
             })
         end, { desc = "Format file or range" })
     end,
